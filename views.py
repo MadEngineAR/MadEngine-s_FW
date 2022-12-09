@@ -8,5 +8,7 @@ class Index:
 
 class AnotherPage:
     def __call__(self, request):
-        return '200 OK', render('another_page.html', server_name=request.get('server_name', None),
-                                port=request.get('port', None))
+        content = {'server_name': request.get('server_name', None),
+                   'port': request.get('port', None)
+                   }
+        return '200 OK', render('another_page.html', content=content)

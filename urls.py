@@ -4,8 +4,8 @@ from views import Index, AnotherPage
 
 # front controller
 def secret_front(environ, request):
-    print(environ['USER'])
-    request['user'] = environ['USER']
+    print(environ['USERNAME'])
+    request['user'] = environ['USERNAME']
 
 
 def other_front(environ, request):
