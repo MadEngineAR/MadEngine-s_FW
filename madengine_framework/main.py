@@ -40,10 +40,11 @@ class Framework:
 
         if method == 'POST':
             data = PostRequests().get_request_params(environ)
+            request['data'] = Framework.decode_value(data)
+            print(f'Нам пришёл post-запрос: {Framework.decode_value(data)}')
             message = Framework.decode_value(data)["comments"].strip(" ")
             from_user = Framework.decode_value(data)["name"]
             from_user_email = Framework.decode_value(data)["email"]
-            request['data'] = Framework.decode_value(data)
             print(f'Нам пришёл post-запрос: {Framework.decode_value(data)}')
             cprint(f'Cообщение от: {from_user}', 'blue', 'on_grey',
                    ['underline'])
@@ -51,7 +52,7 @@ class Framework:
                    ['underline'])
             cprint(f'Текст сообщения: {message}', 'blue', 'on_grey',
                    ['underline'])
-            # cprint(f'Нам сообщение: {Framework.decode_value(data)}', 'green', 'on_blue')
+            cprint(f'Нам сообщение: {Framework.decode_value(data)}', 'green', 'on_blue')
         if method == 'GET':
             request_params = GetRequests().get_request_params(environ)
             request['request_params'] = Framework.decode_value(request_params)
