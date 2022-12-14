@@ -1,37 +1,13 @@
-<!DOCTYPE HTML>
+{% extends "base.html" %}
+{% block title %}
+	Index
+{% endblock %}
+{% block menu %}
+	{% include "inc-menu.html" %}
+{% endblock %}
+{% block body %}
+	{% include "inc-index-body.html" %}
+{% endblock %}
 
-<head>
-    <title>Simple</title>
-    <meta name="description" content="website description"/>
-    <meta name="keywords" content="website keywords, website keywords"/>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <link rel="stylesheet" type="text/css" href="style/style.css" title="style"/>
-</head>
 
-<body>
-<div id="main">
-    <div id="menubar">
-        <ul id="menu">
-            <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
-            <li><a href=another_page>Another Page</a></li>
-        </ul>
-    </div>
-    <div id="site_content">
-        <li>USERNAME: {{user}}</li>
-    </div>
-</div>
-<form action="" method="post">
-    <fieldset>
-        <legend>Are you want to send some message?</legend>
-        <p><label class="title" for="name">Ваше имя:</label>
-					 <input type="text" name="name" id="name"><br />
-					 <label class="title" for="email">Ваш email:</label>
-					 <input type="text" name="email" id="email"></p>
-        <textarea name="comments" id="comments"
-                  style="width:30%;padding:2%;height:50px;font:16px/19px cursive;border:10px double blue;">
-        Message
-        </textarea><br>
-    </fieldset>
-    <div class="submit"><input type="submit" value="Send"/></div>
-</form>
-</body>
+

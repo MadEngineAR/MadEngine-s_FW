@@ -1,5 +1,5 @@
 from quopri import decodestring
-from termcolor import colored, cprint
+from termcolor import cprint
 from madengine_framework.FW_requests import PostRequests, GetRequests
 
 
@@ -52,7 +52,7 @@ class Framework:
                    ['underline'])
             cprint(f'Текст сообщения: {message}', 'blue', 'on_grey',
                    ['underline'])
-            cprint(f'Нам сообщение: {Framework.decode_value(data)}', 'green', 'on_blue')
+            cprint(f'Нам сообщение: {Framework.decode_value(data)}', 'blue', 'on_grey')
         if method == 'GET':
             request_params = GetRequests().get_request_params(environ)
             request['request_params'] = Framework.decode_value(request_params)
