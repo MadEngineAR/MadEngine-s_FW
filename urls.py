@@ -1,7 +1,7 @@
 import platform
 
 
-from views import Index, AnotherPage
+from views import Index, CoursesList, CreateCourse, CreateCategory, CategoryList, CopyCourse, Admin
 
 
 # front controller
@@ -21,5 +21,10 @@ fronts = [secret_front, other_front]
 
 routes = {
     '/': Index(),
-    '/another_page/': AnotherPage(),
+    # '/another_page/': AnotherPage(),
+    '/courses-list/': CoursesList(),
+    '/create-course/': CreateCourse(),
+    '/create-category/': CreateCategory(),
+    '/admin/': Admin(),
+    '/copy-course/': CopyCourse()
 }
