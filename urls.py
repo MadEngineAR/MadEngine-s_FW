@@ -1,7 +1,7 @@
 import platform
 
 
-from views import Index, CoursesList, CreateCourse, CreateCategory, CategoryList, CopyCourse, Admin
+from views import Index, CoursesList, CreateCourse, CreateCategory, CategoryList, CopyCourse, Admin, UserCourses
 
 
 # front controller
@@ -26,5 +26,6 @@ routes = {
     '/create-course/': CreateCourse(),
     '/create-category/': CreateCategory(),
     '/admin/': Admin(),
-    '/copy-course/': CopyCourse()
+    '/copy-course/': CopyCourse(),
+    '/user-courses/': UserCourses(),
 }

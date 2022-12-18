@@ -28,7 +28,7 @@
                 </tr>
                 {% endfor%}
             </table>
-            <form action="" method="post">
+            <form method="post">
                 <fieldset>
                     <legend>Зарегистрируйтесь</legend>
                     <p><label class="title" for="name">Ваше имя:</label>
@@ -38,16 +38,20 @@
                     <p><label for="location" class="title">Курс</label>
                         <select name="location" id="location">
                             {% for category in categories %}
-                                {%for course in category.courses %}
-                                    <option>{{course.category.name}} - {{ course.name }} - {{course.type_}}</option>
-                                {% endfor %}
+                            {%for course in category.courses %}
+                            <option>{{course.category.name}} - {{ course.name }} - {{course.type_}}</option>
+                            {% endfor %}
                             {% endfor %}
                         </select></p>
                     <span class="title">Являетесь участником?</span>
                     <label><input type="radio" name="member" value="yes"/> Да</label>
                     <label><input type="radio" name="member" value="no"/> Нет</label></p>
+                    <a href="/user-courses/">
+                        <input type="submit" value="Регистрация"/>
+                    </a>
                 </fieldset>
-                <div class="submit"><input type="submit" value="Регистрация"/></div>
+
+                <!--                <div class="submit"><input type="submit" value="Регистрация" onclick=""/></div>-->
             </form>
         </div>
 

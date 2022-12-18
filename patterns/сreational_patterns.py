@@ -14,7 +14,12 @@ class Teacher(User):
 
 # студент
 class Student(User):
-    pass
+    courses = []
+
+    def __init__(self, type_, name, email):
+        self.name = name
+        self.type_ = type_
+        self.email = email
 
 
 class UserFactory:
@@ -116,8 +121,14 @@ class Engine:
             self.courses.append(new_course_th)
 
     @staticmethod
-    def create_user(type_):
-        return UserFactory.create(type_)
+    def create_student(name, email):
+        return CourseFactory.create('student', name, email)
+
+    def get_student(self, name):
+        for item in self.students:
+            if item.name == name:
+                return item
+        return None
 
     def create_category(self, name, category=None):
         if category:

@@ -56,6 +56,22 @@ class CoursesList:
             return '200 OK', 'No courses have been added yet'
 
 
+# контроллер - список курсов
+class UserCourses:
+    def __call__(self, request):
+        logger.log('Список курсов пользователя')
+        if request['method'] == 'POST':
+            try:
+                name = request['request_params']['name']
+                email = request['request_params']['email']
+                student = site.create_student(name, email)
+                site.students.append(student)
+                return '200 OK', render('students_list.html',
+                                        objects_list=site.students)
+            except KeyError:
+                return '200 OK', 'No courses have been added yet'
+
+
 # контроллер - создать курс
 class CreateCourse:
     category_id = -1
