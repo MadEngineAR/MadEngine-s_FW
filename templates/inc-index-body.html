@@ -9,7 +9,7 @@
                 <tr class="head">
                     <th>Категории</th>
                     <th>Курсы</th>
-                    <th>Записаться</th>
+<!--                    <th>Записаться</th>-->
                 </tr>
                 {% for category in categories %}
                 <tr>
@@ -28,24 +28,24 @@
                 </tr>
                 {% endfor%}
             </table>
-            <form method="post">
+            <form action="/user-courses/" method="post">
                 <fieldset>
                     <legend>Зарегистрируйтесь</legend>
                     <p><label class="title" for="name">Ваше имя:</label>
                         <input type="text" name="name" id="name"><br/>
                         <label class="title" for="email">Ваш email:</label>
                         <input type="text" name="email" id="email"></p>
-                    <p><label for="location" class="title">Курс</label>
-                        <select name="location" id="location">
+                    <p><label for="course" class="title">Курс</label>
+                        <select name="course" id="location">
                             {% for category in categories %}
                             {%for course in category.courses %}
                             <option>{{course.category.name}} - {{ course.name }} - {{course.type_}}</option>
                             {% endfor %}
                             {% endfor %}
                         </select></p>
-                    <span class="title">Являетесь участником?</span>
-                    <label><input type="radio" name="member" value="yes"/> Да</label>
-                    <label><input type="radio" name="member" value="no"/> Нет</label></p>
+<!--                    <span class="title">Являетесь участником?</span>-->
+<!--                    <label><input type="radio" name="member" value="yes"/> Да</label>-->
+<!--                    <label><input type="radio" name="member" value="no"/> Нет</label></p>-->
                     <a href="/user-courses/">
                         <input type="submit" value="Регистрация"/>
                     </a>

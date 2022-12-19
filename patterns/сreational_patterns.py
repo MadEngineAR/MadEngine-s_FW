@@ -14,12 +14,13 @@ class Teacher(User):
 
 # студент
 class Student(User):
-    courses = []
+
 
     def __init__(self, type_, name, email):
         self.name = name
         self.type_ = type_
         self.email = email
+        self.courses = []
 
 
 class UserFactory:
@@ -30,8 +31,8 @@ class UserFactory:
 
     # порождающий паттерн Фабричный метод
     @classmethod
-    def create(cls, type_):
-        return cls.types[type_]()
+    def create(cls, type_, name, email):
+        return cls.types[type_](type_, name, email)
 
 
 # порождающий паттерн Прототип
@@ -122,7 +123,7 @@ class Engine:
 
     @staticmethod
     def create_student(name, email):
-        return CourseFactory.create('student', name, email)
+        return UserFactory.create('student', name, email)
 
     def get_student(self, name):
         for item in self.students:
@@ -153,7 +154,14 @@ class Engine:
     def create_course(type_, name, category):
         return CourseFactory.create(type_, name, category)
 
-    def get_course(self, name):
+    @staticmethod
+    def get_course(name, category):
+        for item in category.courses:
+            if item.name == name:
+                return item
+        return None
+
+    def get_course_site(self, name):
         for item in self.courses:
             if item.name == name:
                 return item

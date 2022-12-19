@@ -1,5 +1,4 @@
 from quopri import decodestring
-from termcolor import colored, cprint
 from madengine_framework.FW_requests import PostRequests, GetRequests
 
 

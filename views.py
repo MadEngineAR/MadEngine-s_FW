@@ -16,14 +16,6 @@ class Index:
                                 year=datetime.date.today().year)
 
 
-# class AnotherPage:
-#     def __call__(self, request):
-#         content = {'server_name': request.get('server_name', None),
-#                    'port': request.get('port', None)
-#                    }
-#         return '200 OK', render('another_page.html', content=content)
-
-
 # контроллер "О проекте"
 class About:
     def __call__(self, request):
@@ -62,14 +54,34 @@ class UserCourses:
         logger.log('Список курсов пользователя')
         if request['method'] == 'POST':
             try:
-                name = request['request_params']['name']
-                email = request['request_params']['email']
-                student = site.create_student(name, email)
-                site.students.append(student)
+                name = request['data']['name']
+                email = request['data']['email']
+                name = site.decode_value(name)
+                email = site.decode_value(email)
+                if site.get_student(name):
+                    student = site.get_student(name)
+                else:
+                    student = site.create_student(name, email)
+                    site.students.append(student)
+                course_param = request['data']['course'].split('-')
+                # print(course_param)
+                course_name = course_param[1].strip(' ')
+                course_cat_name = course_param[0].strip(' ')
+                course_cat = site.find_category_by_name(course_cat_name)
+                course = site.get_course(course_name,course_cat)
+                if course not in student.courses:
+                    student.courses.append(course)
+
+                    return '200 OK', render('students_list.html',
+                                            objects_list=site.students)
                 return '200 OK', render('students_list.html',
-                                        objects_list=site.students)
+                                        objects_list=site.students, message='Вы уже записаны на этот курс')
             except KeyError:
                 return '200 OK', 'No courses have been added yet'
+        else:
+            return '200 OK', render('students_list.html',
+                                        objects_list=site.students)
+
 
 
 # контроллер - создать курс
@@ -152,21 +164,17 @@ class CopyCourse:
 
         try:
             name = request_params['name']
-            old_course = site.get_course(name)
-            category_id = old_course.category.id
-            # print(category_id)
-            category = site.find_category_by_id(int(category_id))
+            name = site.decode_value(name)
+            category = site.find_category_by_id(int(request_params['id']))
+            old_course = site.get_course(name, category)
             if old_course:
                 new_name = f'copy_{name}'
                 new_course = old_course.clone()
                 new_course.name = new_name
                 site.courses.append(new_course)
                 category.courses.append(new_course)
-                # print(new_course.category)
-                # for course in category.courses:
-                #     print(course.name)
                 return '200 OK', render('course_list.html',
                                         objects_list=category.courses,
-                                        name=new_course.category.name)
+                                        name=new_course.category.name, id=category.id)
         except KeyError:
             return '200 OK', 'No courses have been added yet'

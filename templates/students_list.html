@@ -17,13 +17,20 @@
     <br>
 
     <div>
-        <a href="/create-course/?id={{id}}">Создать новый курс</a>
         <br>
+        <h3>{% if message %}
+            {{message}}
+            {% endif %}
+        </h3>
         <h1>Список студентов</h1>
         {% for item in objects_list %}
-        <li>
-            {{item.name}} - {{item.email}}<span><a href="/copy-course/?name={{item.name}}&id={{id}}">скопировать</a></span>
-        </li>
+        <ul>
+            {{item.name}} - {{item.email}}
+            Cписок курсов
+            {% for course in item.courses %}
+                <li>{{course.category.name}} - {{ course.name }} - {{course.type_}}</li>
+            {% endfor %}
+        </ul>
         {% endfor %}
     </div>
 {% endblock %}
