@@ -147,16 +147,16 @@ class CreateCategory:
 
             if category_name != 'None':
                 category = site.find_category_by_name(category_name)
-                print(category.name)
+                new_child_category = site.create_category(name, category)
+                category.child_category.append(new_child_category)
             else:
                 category = None
                 print(category)
-            new_category = site.create_category(name, category)
-            site.categories.append(new_category)
+                new_category = site.create_category(name, category)
+                site.categories.append(new_category)
             for item in site.categories:
                 if item.category:
                     print(f'{item.name} - {item.category.name}')
-
                 else:
                     print(f'{item.name} - {item.category}')
 

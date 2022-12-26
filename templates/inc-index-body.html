@@ -13,7 +13,13 @@
                 </tr>
                 {% for category in categories %}
                 <tr>
-                    <th>{{category.name}}</th>
+                    <th>{{category.name}}
+                    {% if category.child_category %}
+                        {% for child_category in category.child_category %}
+                            <li>{{child_category.name}} кол-во курсов {{child_category.course_count()}}</li>
+                        {% endfor %}
+                    {% endif %}
+                    </th>
                     <td>
                         <table>
                             <tr>

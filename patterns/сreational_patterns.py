@@ -85,12 +85,13 @@ class Category:
         Category.auto_id += 1
         self.name = name
         self.category = category
+        self.child_category = []
         self.courses = []
 
     def course_count(self):
         result = len(self.courses)
-        if self.category:
-            result += self.category.course_count()
+        # if self.category:
+        #     result += self.category.course_count()
         return result
 
 
@@ -100,8 +101,7 @@ class Engine:
         self.teachers = []
         self.students = []
         self.courses = []
-        structure = ParentItem()
-        self.categories = structure.child
+        self.categories = []
 
     def default_values(self):
         default_categories_theory = ['Техника безопасности', 'Гайд по снаряжению']
