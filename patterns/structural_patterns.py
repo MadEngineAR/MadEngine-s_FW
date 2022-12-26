@@ -10,7 +10,7 @@ class Component(metaclass=ABCMeta):
         pass
 
 
-class ChildOperation(Component):
+class ChildItem(Component):
     def __init__(self, name):
         self.name = name
 
@@ -18,9 +18,9 @@ class ChildOperation(Component):
         print(self.name)
 
 
-class ParentOperation(Component):
+class ParentItem(Component):
     def __init__(self):
-        self._child = set()
+        self._child = []
 
     def operation(self):
         print('category')
@@ -28,10 +28,16 @@ class ParentOperation(Component):
             child.operation()
 
     def append(self, component):
-        self._child.add(component)
+        self._child.append(component)
 
     def remove(self, component):
-        self._child.discard(component)
+        self._child.remove(component)
+
+    @property
+    def child(self):
+        return self._child
+
+
 # структурный паттерн - Декоратор
 class AppRoute:
     def __init__(self, routes, url):

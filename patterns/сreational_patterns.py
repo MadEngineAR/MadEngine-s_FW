@@ -3,6 +3,9 @@ from quopri import decodestring
 
 
 # абстрактный пользователь
+from patterns.structural_patterns import ParentItem
+
+
 class User:
     pass
 
@@ -14,7 +17,6 @@ class Teacher(User):
 
 # студент
 class Student(User):
-
 
     def __init__(self, type_, name, email):
         self.name = name
@@ -98,7 +100,8 @@ class Engine:
         self.teachers = []
         self.students = []
         self.courses = []
-        self.categories = []
+        structure = ParentItem()
+        self.categories = structure.child
 
     def default_values(self):
         default_categories_theory = ['Техника безопасности', 'Гайд по снаряжению']
@@ -133,19 +136,19 @@ class Engine:
 
     def create_category(self, name, category=None):
         if category:
-            self.find_category_by_name(category)
+            self.find_category_by_name(category.name)
         return Category(name, category)
 
     def find_category_by_id(self, id):
         for item in self.categories:
-            print('item', item.id)
+            # print('item', item.id)
             if item.id == id:
                 return item
         raise Exception(f'Нет категории с id = {id}')
 
     def find_category_by_name(self, cat_name):
         for item in self.categories:
-            print('item_name', item.name)
+            # print('item_name', item.name)
             if item.name == cat_name:
                 return item
         raise Exception(f'Нет категории с именем = {cat_name}')

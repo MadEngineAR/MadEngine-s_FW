@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block title %}
-Создание курса
+Создание категории
 {% endblock %}
 {% block style %}
 {% include "inc-style.html" %}
@@ -13,6 +13,7 @@
 <form method="post">
 	<p><label for="category" class="title">Категория</label>
 		<select name="category" id="category_id">
+			<option>None</option>
 			{% for category in categories %}
 			<option>{{category.name}}</option>
 			{% endfor %}

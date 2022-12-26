@@ -11,7 +11,8 @@ logger = Logger('main')
 
 routes = {}
 
-@AppRoute(routes=routes, url='/')# контроллер - главная страница
+
+@AppRoute(routes=routes, url='/')  # контроллер - главная страница
 class Index:
     @Debug(name='Index')
     def __call__(self, request):
@@ -77,7 +78,7 @@ class UserCourses:
                 course_name = course_param[1].strip(' ')
                 course_cat_name = course_param[0].strip(' ')
                 course_cat = site.find_category_by_name(course_cat_name)
-                course = site.get_course(course_name,course_cat)
+                course = site.get_course(course_name, course_cat)
                 if course not in student.courses:
                     student.courses.append(course)
 
@@ -89,8 +90,7 @@ class UserCourses:
                 return '200 OK', 'No courses have been added yet'
         else:
             return '200 OK', render('students_list.html',
-                                        objects_list=site.students)
-
+                                    objects_list=site.students)
 
 
 # контроллер - создать курс
@@ -134,7 +134,7 @@ class CreateCourse:
 class CreateCategory:
     @Debug(name='create-category')
     def __call__(self, request):
-
+        print(request)
         if request['method'] == 'POST':
             # метод пост
 
@@ -143,14 +143,22 @@ class CreateCategory:
             name = data['name']
             name = site.decode_value(name)
 
-            category_id = data.get('category_id')
+            category_name = data.get('category')
 
-            category = None
-            if category_id:
-                category = site.find_category_by_id(int(category_id))
-
+            if category_name != 'None':
+                category = site.find_category_by_name(category_name)
+                print(category.name)
+            else:
+                category = None
+                print(category)
             new_category = site.create_category(name, category)
             site.categories.append(new_category)
+            for item in site.categories:
+                if item.category:
+                    print(f'{item.name} - {item.category.name}')
+
+                else:
+                    print(f'{item.name} - {item.category}')
 
             return '200 OK', render('index.html',
                                     categories=site.categories,
