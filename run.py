@@ -1,7 +1,7 @@
 from wsgiref.simple_server import make_server
-
 from madengine_framework.main import Framework
-from urls import routes, fronts
+from views import routes
+from urls import fronts
 
 
 application = Framework(routes, fronts)

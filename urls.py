@@ -19,13 +19,13 @@ def other_front(environ, request):
 
 fronts = [secret_front, other_front]
 
-routes = {
-    '/': Index(),
-    # '/another_page/': AnotherPage(),
-    '/courses-list/': CoursesList(),
-    '/create-course/': CreateCourse(),
-    '/create-category/': CreateCategory(),
-    '/admin/': Admin(),
-    '/copy-course/': CopyCourse(),
-    '/user-courses/': UserCourses(),
-}
+# routes = {
+#     '/': Index(),
+#     # '/another_page/': AnotherPage(),
+#     '/courses-list/': CoursesList(),
+#     '/create-course/': CreateCourse(),
+#     '/create-category/': CreateCategory(),
+#     '/admin/': Admin(),
+#     '/copy-course/': CopyCourse(),
+#     '/user-courses/': UserCourses(),
+# }
