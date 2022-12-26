@@ -1,7 +1,5 @@
 import platform
-
-
-from views import Index, CoursesList, CreateCourse, CreateCategory, CategoryList, CopyCourse, Admin, UserCourses
+# from views import Index, CoursesList, CreateCourse, CreateCategory, CategoryList, CopyCourse, Admin, UserCourses
 
 
 # front controller
