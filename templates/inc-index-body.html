@@ -12,14 +12,9 @@
 <!--                    <th>Записаться</th>-->
                 </tr>
                 {% for category in categories %}
+                {% if category.category == None%}
                 <tr>
-                    <th>{{category.name}}
-                    {% if category.child_category %}
-                        {% for child_category in category.child_category %}
-                            <li>{{child_category.name}} кол-во курсов {{child_category.course_count()}}</li>
-                        {% endfor %}
-                    {% endif %}
-                    </th>
+                    <th>{{category.name}} </th>
                     <td>
                         <table>
                             <tr>
@@ -32,6 +27,7 @@
                         </table>
                     </td>
                 </tr>
+                {% endif %}
                 {% endfor%}
             </table>
             <form action="/user-courses/" method="post">

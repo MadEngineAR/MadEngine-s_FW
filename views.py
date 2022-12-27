@@ -77,7 +77,7 @@ class UserCourses:
                 # print(course_param)
                 course_name = course_param[1].strip(' ')
                 course_cat_name = course_param[0].strip(' ')
-                course_cat = site.find_category_by_name(course_cat_name)
+                course_cat = site.find_category_by_name(course_cat_name, site.categories)
                 course = site.get_course(course_name, course_cat)
                 if course not in student.courses:
                     student.courses.append(course)
@@ -146,12 +146,13 @@ class CreateCategory:
             category_name = data.get('category')
 
             if category_name != 'None':
-                category = site.find_category_by_name(category_name)
+                category = site.find_category_by_name(category_name, site.categories)
                 new_child_category = site.create_category(name, category)
                 category.child_category.append(new_child_category)
+                site.categories.append(new_child_category)
             else:
                 category = None
-                print(category)
+                # print(category)
                 new_category = site.create_category(name, category)
                 site.categories.append(new_category)
             for item in site.categories:

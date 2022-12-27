@@ -3,31 +3,33 @@
 Администрирование
 {% endblock %}
 {% block style %}
-	{% include "inc-style.html" %}
+{% include "inc-style.html" %}
 {% endblock %}
 {% block menu %}
-	{% include "inc-menu.html" %}
+{% include "inc-menu.html" %}
 {% endblock %}
 {% block body %}
-	<div>
-		<a href="/user-courses/">Список студентов</a></li> <br>
-	</div>
-	<div>
-		<a href="/create-category/">Создать новую категорию</a>
-	</div>
-	<div>
-		<h1>Список существующих категорий</h1>
-        {% for item in objects_list %}
-        <ul>
-            {{item.name}}<br>
-			<span>Количество курсов: {{item.course_count()}}</span>
-			{% if item.child_category %}
-                        {% for child_category in item.child_category %}
-                            <li>{{child_category.name}} кол-во курсов {{child_category.course_count()}}</li>
-                        {% endfor %}
-                    {% endif %}
-			<a href="/courses-list/?id={{item.id}}">Показать курсы</a>
-        </ul>
-        {% endfor %}
-	</div>
+<div>
+	<a href="/user-courses/">Список студентов</a></li> <br>
+</div>
+<div>
+	<a href="/create-category/">Создать новую категорию</a>
+</div>
+<div>
+	<h1>Список существующих категорий</h1>
+	{% for item in objects_list %}
+	<ul>
+		{{item.name}}<br>
+		<span>Количество курсов: {{item.course_count()}}</span>
+		<a href="/courses-list/?id={{item.id}}">Показать курсы</a>
+		{% if item.child_category %}
+			{% for child_category in item.child_category %}
+			<li>{{child_category.name}} кол-во курсов {{child_category.course_count()}}</li>
+		<a href="/courses-list/?id={{child_category.id}}">Показать курсы</a>
+		{% endfor %}
+		{% endif %}
+
+	</ul>
+	{% endfor %}
+</div>
 {% endblock %}

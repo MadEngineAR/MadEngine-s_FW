@@ -1,7 +1,7 @@
 from copy import deepcopy
 from quopri import decodestring
 
-
+flag = False
 # абстрактный пользователь
 from patterns.structural_patterns import ParentItem
 
@@ -112,16 +112,16 @@ class Engine:
             self.categories.append(new_cat)
             for course in default_courses:
                 new_course = self.create_course('practice', course,
-                                                category=self.find_category_by_name(category))
+                                                category=self.find_category_by_name(category, self.categories))
                 self.courses.append(new_course)
         for category in default_categories_theory:
             new_cat = self.create_category(category)
             self.categories.append(new_cat)
             new_course_th = self.create_course('theory', 'Основы',
-                                               category=self.find_category_by_name(category))
+                                               category=self.find_category_by_name(category, self.categories))
             self.courses.append(new_course_th)
             new_course_th = self.create_course('theory', 'Бонус',
-                                               category=self.find_category_by_name(category))
+                                               category=self.find_category_by_name(category, self.categories))
             self.courses.append(new_course_th)
 
     @staticmethod
@@ -136,7 +136,7 @@ class Engine:
 
     def create_category(self, name, category=None):
         if category:
-            self.find_category_by_name(category.name)
+            self.find_category_by_name(category.name, self.categories)
         return Category(name, category)
 
     def find_category_by_id(self, id):
@@ -146,11 +146,12 @@ class Engine:
                 return item
         raise Exception(f'Нет категории с id = {id}')
 
-    def find_category_by_name(self, cat_name):
-        for item in self.categories:
+    def find_category_by_name(self, cat_name, cat_list):
+        for item in cat_list:
             # print('item_name', item.name)
             if item.name == cat_name:
                 return item
+
         raise Exception(f'Нет категории с именем = {cat_name}')
 
     @staticmethod
