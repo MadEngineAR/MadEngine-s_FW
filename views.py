@@ -1,6 +1,6 @@
 import datetime
 from madengine_framework.templator import render
-from patterns.behavioral_patterns import EmailNotifier, SmsNotifier
+from patterns.behavioral_patterns import EmailNotifier, SmsNotifier, BaseSerializer
 from patterns.structural_patterns import AppRoute, Debug
 from patterns.сreational_patterns import Engine, Logger
 
@@ -211,3 +211,10 @@ class CopyCourse:
                                         name=new_course.category.name, id=category.id)
         except KeyError:
             return '200 OK', 'No courses have been added yet'
+
+
+@AppRoute(routes=routes, url='/api/')
+class CourseApi:
+    @Debug(name='CourseApi')
+    def __call__(self, request):
+        return '200 OK', BaseSerializer(site.courses).save()

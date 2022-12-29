@@ -1,8 +1,7 @@
 from copy import deepcopy
 from quopri import decodestring
 
-from patterns.behavioral_patterns import Subject, EmailNotifier, SmsNotifier
-
+from patterns.behavioral_patterns import Subject, EmailNotifier, SmsNotifier, FileWriter
 
 flag = False
 email_notifier = EmailNotifier()
@@ -217,11 +216,21 @@ class SingletonByName(type):
             return cls.__instance[name]
 
 
+# class Logger(metaclass=SingletonByName):
+#
+#     def __init__(self, name):
+#         self.name = name
+#
+#     @staticmethod
+#     def log(text):
+#         print('log--->', text)
+
 class Logger(metaclass=SingletonByName):
 
-    def __init__(self, name):
+    def __init__(self, name, writer=FileWriter()):
         self.name = name
+        self.writer = writer
 
-    @staticmethod
-    def log(text):
-        print('log--->', text)
+    def log(self, text):
+        text = f'log---> {text}'
+        self.writer.write(text)
