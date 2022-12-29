@@ -142,7 +142,7 @@ class CreateCourse:
 class CreateCategory:
     @Debug(name='create-category')
     def __call__(self, request):
-        print(request)
+        # print(request)
         if request['method'] == 'POST':
             # метод пост
 
@@ -163,11 +163,11 @@ class CreateCategory:
                 # print(category)
                 new_category = site.create_category(name, category)
                 site.categories.append(new_category)
-            for item in site.categories:
-                if item.category:
-                    print(f'{item.name} - {item.category.name}')
-                else:
-                    print(f'{item.name} - {item.category}')
+            # for item in site.categories:
+            #     if item.category:
+            #         print(f'{item.name} - {item.category.name}')
+            #     else:
+            #         print(f'{item.name} - {item.category}')
 
             return '200 OK', render('index.html',
                                     categories=site.categories,
@@ -193,7 +193,7 @@ class CopyCourse:
     @Debug(name='copy-course')
     def __call__(self, request):
         request_params = request['request_params']
-        print(request_params)
+        # print(request_params)
 
         try:
             name = request_params['name']
