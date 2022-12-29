@@ -1,7 +1,12 @@
 from copy import deepcopy
 from quopri import decodestring
 
+from patterns.behavioral_patterns import Subject, EmailNotifier, SmsNotifier
+
+
 flag = False
+email_notifier = EmailNotifier()
+sms_notifier = SmsNotifier()
 # абстрактный пользователь
 from patterns.structural_patterns import ParentItem
 
@@ -45,13 +50,23 @@ class CoursePrototype:
         return deepcopy(self)
 
 
-class Course(CoursePrototype):
+class Course(CoursePrototype, Subject):
 
     def __init__(self, type_, name, category):
         self.name = name
         self.type_ = type_
         self.category = category
         self.category.courses.append(self)
+        self.students = []
+        super().__init__()
+
+    def __getitem__(self, item):
+        return self.students[item]
+
+    def add_student(self, student: Student):
+        self.students.append(student)
+        self.notify()
+
 
 
 # интерактивный курс
@@ -113,6 +128,8 @@ class Engine:
             for course in default_courses:
                 new_course = self.create_course('practice', course,
                                                 category=self.find_category_by_name(category, self.categories))
+                new_course.observers.append(email_notifier)
+                new_course.observers.append(sms_notifier)
                 self.courses.append(new_course)
         for category in default_categories_theory:
             new_cat = self.create_category(category)
@@ -122,6 +139,8 @@ class Engine:
             self.courses.append(new_course_th)
             new_course_th = self.create_course('theory', 'Бонус',
                                                category=self.find_category_by_name(category, self.categories))
+            new_course_th.observers.append(email_notifier)
+            new_course_th.observers.append(sms_notifier)
             self.courses.append(new_course_th)
 
     @staticmethod

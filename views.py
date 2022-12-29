@@ -1,5 +1,6 @@
 import datetime
 from madengine_framework.templator import render
+from patterns.behavioral_patterns import EmailNotifier, SmsNotifier
 from patterns.structural_patterns import AppRoute, Debug
 from patterns.сreational_patterns import Engine, Logger
 
@@ -8,8 +9,9 @@ site = Engine()
 site.default_values()
 
 logger = Logger('main')
-
 routes = {}
+email_notifier = EmailNotifier()
+sms_notifier = SmsNotifier()
 
 
 @AppRoute(routes=routes, url='/')  # контроллер - главная страница
@@ -79,8 +81,10 @@ class UserCourses:
                 course_cat_name = course_param[0].strip(' ')
                 course_cat = site.find_category_by_name(course_cat_name, site.categories)
                 course = site.get_course(course_name, course_cat)
+
                 if course not in student.courses:
                     student.courses.append(course)
+                    course.add_student(student)
 
                     return '200 OK', render('students_list.html',
                                             objects_list=site.students)
@@ -111,6 +115,10 @@ class CreateCourse:
             if self.category_id != -1:
                 category = site.find_category_by_id(int(self.category_id))
                 course = site.create_course(type_, name, category)
+
+                course.observers.append(email_notifier)
+                course.observers.append(sms_notifier)
+
                 site.courses.append(course)
             return '200 OK', render('course_list.html',
                                     objects_list=category.courses,
