@@ -1,0 +1,63 @@
+<body>
+<div id="main">
+    <div id="site_content">
+        <div class="content">
+            <h1>Программы обучения - Горнолыжная школа</h1>
+            <p>Курсы в течение {{ year }} года </p>
+            <p>Расписание действует на: {{year}}</p>
+            <table>
+                <tr class="head">
+                    <th>Категории</th>
+                    <th>Курсы</th>
+<!--                    <th>Записаться</th>-->
+                </tr>
+                {% for category in categories %}
+                {% if category.category == None%}
+                <tr>
+                    <th>{{category.name}} </th>
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    {% for course in category.courses%}
+                                    <ul>{{ course.name }} - {{course.type_}}<br/></ul>
+                                    {% endfor%}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                {% endif %}
+                {% endfor%}
+            </table>
+            <form action="/user-courses/" method="post">
+                <fieldset>
+                    <legend>Зарегистрируйтесь</legend>
+                    <p><label class="title" for="name">Ваше имя:</label>
+                        <input type="text" name="name" id="name"><br/>
+                        <label class="title" for="email">Ваш email:</label>
+                        <input type="text" name="email" id="email"></p>
+                    <p><label for="course" class="title">Курс</label>
+                        <select name="course" id="location">
+                            {% for category in categories %}
+                            {%for course in category.courses %}
+                            <option>{{course.category.name}} - {{ course.name }} - {{course.type_}}</option>
+                            {% endfor %}
+                            {% endfor %}
+                        </select></p>
+<!--                    <span class="title">Являетесь участником?</span>-->
+<!--                    <label><input type="radio" name="member" value="yes"/> Да</label>-->
+<!--                    <label><input type="radio" name="member" value="no"/> Нет</label></p>-->
+                    <a href="/user-courses/">
+                        <input type="submit" value="Регистрация"/>
+                    </a>
+                </fieldset>
+
+                <!--                <div class="submit"><input type="submit" value="Регистрация" onclick=""/></div>-->
+            </form>
+        </div>
+
+    </div>
+</div>
+</body>
+

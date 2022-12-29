@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}
+Список студентов
+{% endblock %}
+{% block style %}
+	{% include "inc-style.html" %}
+{% endblock %}
+{% block menu %}
+	{% include "inc-menu.html" %}
+{% endblock %}
+{% block body %}
+    <div>
+        <a href="/">назад на главную</a>
+    </div>
+
+    <br>
+    <br>
+
+    <div>
+        <br>
+        <h3>{% if message %}
+            {{message}}
+            {% endif %}
+        </h3>
+        <h1>Список студентов</h1>
+        {% for item in objects_list %}
+        <ul>
+            {{item.name}} - {{item.email}}
+            Cписок курсов
+            {% for course in item.courses %}
+                <li>{{course.category.name}} - {{ course.name }} - {{course.type_}}</li>
+            {% endfor %}
+        </ul>
+        {% endfor %}
+    </div>
+{% endblock %}

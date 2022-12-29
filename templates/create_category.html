@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}
+Создание категории
+{% endblock %}
+{% block style %}
+{% include "inc-style.html" %}
+{% endblock %}
+{% block menu %}
+{% include "inc-menu.html" %}
+{% endblock %}
+{% block body %}
+<h1>Создание категории</h1>
+<form method="post">
+	<p><label for="category" class="title">Категория</label>
+		<select name="category" id="category_id">
+			<option>None</option>
+			{% for category in categories %}
+				<option>{{category.name}}</option>
+			{% endfor %}
+		</select></p>
+	<input type="text" name="name" placeholder="Название">
+	<button type="submit">Сохранить и вернуться на главную</button>
+</form>
+
+{% endblock %}
