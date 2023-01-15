@@ -1,7 +1,8 @@
 import datetime
 from madengine_framework.templator import render
 from patterns.structural_patterns import AppRoute, Debug
-from patterns.сreational_patterns import Engine, Logger
+from patterns.сreational_patterns import Engine, Logger, MapperRegistry
+from patterns.architectural_system_pattern_unit_of_work import UnitOfWork
 
 site = Engine()
 # Заполняем сайт категориями и курсами по умолчанию
@@ -10,6 +11,9 @@ site.default_values()
 logger = Logger('main')
 
 routes = {}
+
+UnitOfWork.new_current()
+UnitOfWork.get_current().set_mapper_registry(MapperRegistry)
 
 
 @AppRoute(routes=routes, url='/')  # контроллер - главная страница
@@ -73,6 +77,8 @@ class UserCourses:
                 else:
                     student = site.create_student(name, email)
                     site.students.append(student)
+                    student.mark_new()
+                    UnitOfWork.get_current().commit()
                 course_param = request['data']['course'].split('-')
                 # print(course_param)
                 course_name = course_param[1].strip(' ')
