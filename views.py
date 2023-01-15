@@ -1,5 +1,6 @@
 import datetime
 from madengine_framework.templator import render
+from patterns.behavioral_patterns import ListView
 from patterns.structural_patterns import AppRoute, Debug
 from patterns.сreational_patterns import Engine, Logger, MapperRegistry
 from patterns.architectural_system_pattern_unit_of_work import UnitOfWork
@@ -59,6 +60,13 @@ class CoursesList:
         except KeyError:
             return '200 OK', 'No courses have been added yet'
 
+@AppRoute(routes=routes, url='/student-list/')
+class StudentListView(ListView):
+    template_name = 'student_list.html'
+
+    def get_queryset(self):
+        mapper = MapperRegistry.get_current_mapper('student')
+        return mapper.all()
 
 # контроллер - список курсов
 @AppRoute(routes=routes, url='/user-courses/')
@@ -66,6 +74,8 @@ class UserCourses:
     @Debug(name='user-courses')
     def __call__(self, request):
         logger.log('Список курсов пользователя')
+        mapper = MapperRegistry.get_current_mapper('student')
+        site.students = mapper.all()
         if request['method'] == 'POST':
             try:
                 name = request['data']['name']

@@ -223,8 +223,8 @@ class StudentMapper:
         self.cursor.execute(statement)
         result = []
         for item in self.cursor.fetchall():
-            id, name = item
-            student = Student(name)
+            id, name, email = item
+            student = UserFactory.create('student', name, email)
             student.id = id
             result.append(student)
         return result
@@ -239,8 +239,12 @@ class StudentMapper:
             raise RecordNotFoundException(f'record with id={id} not found')
 
     def insert(self, obj):
-        statement = f"INSERT INTO {self.tablename} (name) VALUES (?)"
-        self.cursor.execute(statement, (obj.name,))
+        statement = f"INSERT INTO {self.tablename} (name, email) VALUES (?, ?)"
+        # INSERT
+        # INTO
+        # Customers(city, cname, cnum)
+        # VALUES(‘London’, 'Hoffman', 2001);
+        self.cursor.execute(statement, (obj.name, obj.email))
         try:
             self.connection.commit()
         except Exception as e:
